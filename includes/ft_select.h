@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/01 16:08:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/01 16:12:48 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@
 # include <signal.h>
 # include <curses.h>
 
+# define TAB 9
+# define ARROW 27
 # define ARROW_L 68
 # define ARROW_U 65
 # define ARROW_R 67
 # define ARROW_D 66
 
+
+void	handling_tab();
 void	handling_arrow(int c);
 
 #endif

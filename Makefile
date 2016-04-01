@@ -20,7 +20,8 @@ LIB_LINK		=	-L $(LIB_PATH) -lft
 
 INCLUDES		=	-I $(LIB_PATH)/includes -I ./includes
 SRCS			+=	srcs/main.c
-SRCS			+=	srcs/key_pressed.c
+SRCS			+=	srcs/handling_arrow.c
+SRCS			+=	srcs/handling_tab.c
 
 OBJS			=	$(SRCS:srcs/%.c=srco/%.o)
 

@@ -6,11 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/01 16:06:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/01 16:19:35 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+
 
 int	set_terminal(int fd)
 {
@@ -45,18 +47,16 @@ int main(int argc, char **argv)
 	while (7)
 	{
 		ft_putstr("fsh-> ");
-
 		while (order[0] != '\n')
 		{
 			ret = read(0, order, 3);
 			//printf("%d %d %d\n", order[0], order[1], order[2]);
-			if(order[0] == 27)
+			if(order[0] == ARROW)
 				handling_arrow(order[2]);
+			else if (order[0] == TAB)
+				handling_tab();
 			else if (order[0] == 4)
-			{
 				exit(0);
-				return (0);
-			}
 		}
 		order[0] = false;
 		ft_putchar('\n');
