@@ -6,7 +6,7 @@
 #    By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 17:28:13 by jmontija          #+#    #+#              #
-#    Updated: 2016/03/31 19:37:41 by jmontija         ###   ########.fr        #
+#    Updated: 2016/04/01 16:07:50 by jmontija         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ LIB_LINK		=	-L $(LIB_PATH) -lft
 
 INCLUDES		=	-I $(LIB_PATH)/includes -I ./includes
 SRCS			+=	srcs/main.c
+SRCS			+=	srcs/key_pressed.c
 
 OBJS			=	$(SRCS:srcs/%.c=srco/%.o)
 

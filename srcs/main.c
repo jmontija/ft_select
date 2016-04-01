@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/01 15:56:38 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/01 16:06:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,7 @@ int main(int argc, char **argv)
 			ret = read(0, order, 3);
 			//printf("%d %d %d\n", order[0], order[1], order[2]);
 			if(order[0] == 27)
-			{
-				order[2] == ARROW_L ? ft_putstr("ARROW_LEFT") : 0;
-				order[2] == ARROW_U ? ft_putstr("ARROW_UP") : 0;
-				order[2] == ARROW_R ? ft_putstr("ARROW_RIGHT") : 0;
-				order[2] == ARROW_D ? ft_putstr("ARROW_DOWN") : 0;
-			}
+				handling_arrow(order[2]);
 			else if (order[0] == 4)
 			{
 				exit(0);
