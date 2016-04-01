@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/01 16:12:48 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/01 20:03:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <signal.h>
 # include <curses.h>
 
+# define BUF_SIZE 3
 # define TAB 9
 # define ARROW 27
 # define ARROW_L 68
