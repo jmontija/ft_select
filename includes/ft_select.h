@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/03/31 16:00:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/01 15:53:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,11 @@
 # include <termios.h>
 # include <term.h>
 # include <signal.h>
+# include <curses.h>
 
-typedef int				t_bool;
-enum {false, true};
-
-typedef struct			s_group
-{
-
-}						t_group;
-
-t_group					*init_grp(void);
+# define ARROW_L 68
+# define ARROW_U 65
+# define ARROW_R 67
+# define ARROW_D 66
 
 #endif

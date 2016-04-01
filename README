@@ -1,0 +1,3 @@
+-> man 3: https://docs.oracle.com/cd/E19683-01/817-0678/6mgfa9n59/index.html
+-> helper: http://loiclefloch.fr/877-les-termcaps/
+-> term.c_lflag &= ~(ICANON) -> http://stackoverflow.com/questions/20948621/what-does-mean

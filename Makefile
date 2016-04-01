@@ -6,7 +6,7 @@
 #    By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 17:28:13 by jmontija          #+#    #+#              #
-#    Updated: 2016/03/31 16:05:07 by jmontija         ###   ########.fr        #
+#    Updated: 2016/03/31 19:37:41 by jmontija         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ srco:
 	@mkdir -p srco
 
 $(NAME): $(LIB) $(OBJS)
-	@$(COMPIL) -o $@ $^ $(LIB_LINK)
+	@$(COMPIL) -o $@ $^ $(LIB_LINK) -ltermcap
 	@echo "Compiled" $(NAME) "done"
 
 $(LIB):
@@ -42,6 +42,7 @@ srco/%.o: srcs/%.c ./includes/ft_select.h
 clean:
 	@rm -f $(OBJS)
 	@rm -rf srco
+	@make clean -C $(LIB_PATH)
 	@echo "Cleaning" $(NAME)
 
 fclean: clean

@@ -16,7 +16,7 @@
 # include <fcntl.h>
 # include "libft.h"
 
-# define BUFF_SIZE	10
+# define BUFF_SIZE	1
 # define FD_MAX		1010
 # define NEW(x)			(ft_strnew(x))
 # define LEN(x)			(ft_strlen(x))
