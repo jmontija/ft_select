@@ -1,3 +1,9 @@
 -> man 3: https://docs.oracle.com/cd/E19683-01/817-0678/6mgfa9n59/index.html
 -> helper: http://loiclefloch.fr/877-les-termcaps/
 -> term.c_lflag &= ~(ICANON) -> http://stackoverflow.com/questions/20948621/what-does-mean
+	-> cfmakeraw()
+-> http://stackoverflow.com/questions/12437593/how-to-read-a-binary-data-over-serial-terminal-in-c-program
+-> http://www.cs.uleth.ca/~holzmann/C/system/ttyraw.c
+-> https://www.chemie.fu-berlin.de/chemnet/use/info/libc/libc_12.html
+-> http://unixwiz.net/techtips/termios-vmin-vtime.html
+-> https://en.wikibooks.org/wiki/Serial_Programming/termios

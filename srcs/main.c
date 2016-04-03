@@ -6,30 +6,34 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/01 20:49:28 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/03 19:12:28 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		set_shell(struct termios *term, int fd, int lflag)
+int		set_shell(int lflag)
 {
-	if (tcgetattr(0, term) == -1)
+	struct termios	term;
+
+	if (tcgetattr(0, &term) == -1)
 		return (-1);
-	term->c_lflag = term->c_lflag & lflag;
-	term->c_cc[VMIN] = 1; // nb de fois où la touche doit etre appuyé pour lancer la commande
-	term->c_cc[VTIME] = 0; // retour de read tout les n délai
-	if (tcsetattr(fd, TCSADRAIN, term)) // check pour le TCSAFLUSH
+	cfmakeraw(&term);
+	term.c_lflag = term.c_lflag & lflag;
+	term.c_cc[VMIN] = 1; // nb de fois où la touche doit etre appuyé pour lancer la commande
+	term.c_cc[VTIME] = 0; // retour de read tout les n délai*/
+	if (tcsetattr(0, TCSADRAIN, &term)) // check pour le TCSAFLUSH
 		return (-1);
 	return (0);
 }
 
-int		reset_shell(struct termios *term, int lflag)
+int		reset_shell()
 {
-	if (tcgetattr(0, term) == -1)
+	struct termios term;
+
+	if (tcgetattr(0, &term) == -1)
 		return (-1);
-	term->c_lflag = lflag;
-	if (tcsetattr(0, 0, term)) // check pour le TCSAFLUSH
+	if (tcsetattr(0, 0, &term) == -1)
 		return (-1);
 	return (0);
 }
@@ -49,41 +53,34 @@ int main(int argc, char **argv)
 {
 	struct termios	term;
 	char	order[BUF_SIZE];
-	int		fd;
 	int		key;
+	int		ret;
 
-	fd = 0;
 	key = 0;
-	init_shell(fd);
-	if (set_shell(&term, fd, (~ICANON & ~ECHO)) < 0)
-		return (-1);
+	init_shell(0);
 	while (7)
 	{
 		ft_putstr("fts> ");
-		while (read(0, order, BUF_SIZE))
+		while ((ret = read(0, order, BUF_SIZE)))
 		{
-			//printf("%d %d %d", order[0], order[1], order[2]);
-			if (set_shell(&term, fd, (~ICANON & ~ECHO)) < 0)
-				return (-1);
 			key = order[0];
-			if (key == '\n')
+			if (key == 10)
 				break ;
 			else if(key == ARROW)
-				handling_arrow(order[2]);
-			else if (key == TAB)
-				handling_tab();
-			else if (key == 4)
-				return (-1);
-			else if (key != TAB && key != ARROW)
 			{
-				cfmakeraw(&term);
-				reset_shell(&term, (ICANON | ECHO));
-				//break ;
+				set_shell((~ICANON & ~ECHO));
+				handling_arrow(order[2]);
+				reset_shell();
 			}
-				//ft_putstr("need to set the shell en mode non CANONIQUE");
+			else if (key == TAB)
+			{
+				set_shell((~ICANON & ~ECHO));
+				handling_tab();
+				reset_shell();
+			}
+			else if (key != TAB && key != ARROW)
+				ft_putstr("key_pressed $");
 		}
-		order[0] = false;
-		ft_putchar('\n');
 	}
 	return (0);
 }
