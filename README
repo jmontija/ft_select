@@ -7,3 +7,9 @@
 -> https://www.chemie.fu-berlin.de/chemnet/use/info/libc/libc_12.html
 -> http://unixwiz.net/techtips/termios-vmin-vtime.html
 -> https://en.wikibooks.org/wiki/Serial_Programming/termios
+
+-> options terminfo
+	-> https://www.freebsd.org/cgi/man.cgi?query=termcap&sektion=5
+	-> http://www.panix.com/~spkemp/examplex/unix/termcap.htm
+	-> cursor_motion
+		-> https://www.gnu.org/software/termutils/manual/termcap-1.3/html_node/termcap_26.html

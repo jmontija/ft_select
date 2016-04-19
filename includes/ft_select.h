@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/03 17:55:58 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/19 21:09:58 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,31 @@
 # include <curses.h>
 
 # define BUF_SIZE 3
-# define TAB 9
+# define ENTER 10
+# define SPACE 32
 # define ARROW 27
 # define ARROW_L 68
 # define ARROW_U 65
 # define ARROW_R 67
 # define ARROW_D 66
 
+typedef struct		s_elem
+{
+	char			*name;
+	int				used;
+	struct s_elem	*next;
+}					t_elem;
 
-void	handling_tab();
-void	handling_arrow(int c);
+typedef struct		s_group
+{
+	struct s_elem	*first;
+	struct s_elem	*curr;
+}					t_group;
+
+t_group				*init_grp(void);
+int					ft_getchar(int c);
+int					insert_elem(t_group *grp, char *name);
+void				ft_tputs(char *cap_code);
+void				handling_arrow(t_group *grp, int c);
 
 #endif
