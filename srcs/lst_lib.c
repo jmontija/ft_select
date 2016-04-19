@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 22:43:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/19 23:29:49 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int		insert_elem(t_group *grp, char *name)
 	if (!new)
 		return (-1);
 	new->name = ft_strdup(name);
-	new->used = false;
+	new->curson = false;
+	new->selected = false;
 	new->next = NULL;
 	if (grp->curr != NULL)
 		grp->curr->next = new;
@@ -49,5 +50,6 @@ t_group	*init_grp(void)
 	grp->first = NULL;
 	grp->curr = NULL;
 	grp->line_nb = -1;
+	grp->pos_y = 0;
 	return (grp);
 }

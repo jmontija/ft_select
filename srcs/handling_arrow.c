@@ -6,20 +6,24 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 22:57:13 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/19 23:35:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	set_underline(t_elem *curr)
+void	set_underline(t_group *grp, t_elem *curr)
 {
 	ft_tputs("ce");
 	ft_tputs("cr");
+	if (curr->selected)
+		ft_tputs("mr");
 	ft_tputs("us");
 	ft_putstr(curr->name);
 	ft_tputs("ue");
-	curr->used = true;
+	ft_tputs("me");
+	curr->curson = true;
+	grp->pos_y = curr->pos;
 }
 
 t_elem	*reset_underline(t_group *grp, int c)
@@ -31,12 +35,15 @@ t_elem	*reset_underline(t_group *grp, int c)
 	last = curr;
 	while (curr != NULL)
 	{
-		if (curr->used)
+		if (curr->curson)
 		{
-			curr->used = false;
+			curr->curson = false;
 			ft_tputs("ce");
 			ft_tputs("cr");
+			if (curr->selected)
+				ft_tputs("mr");
 			ft_putstr(curr->name);
+			ft_tputs("me");
 			if (c == ARROW_D && curr->next)
 				return (curr->next);
 			else if (c == ARROW_U && last)
@@ -56,22 +63,22 @@ void	handle_it(t_group *grp, char *cap_code, int c)
 
 	curr = reset_underline(grp, c);
 	ft_tputs(cap_code);
-	set_underline(curr);
+	set_underline(grp, curr);
 }
 
 void	handling_arrow(t_group *grp, int c)
 {
-	if (c == ARROW_U && grp->first->used == false)
+	if (c == ARROW_U && grp->first->curson == false)
 		handle_it(grp, "up", c);
-	else if (c == ARROW_U && grp->first->used == true)
+	else if (c == ARROW_U && grp->first->curson == true)
 	{
 		reset_underline(grp, c);
 		tputs(tgoto(tgetstr("cm", NULL), 0, grp->line_nb), 0, ft_getchar);
-		set_underline(grp->curr);
+		set_underline(grp, grp->curr);
 	}
-	else if (c == ARROW_D && grp->curr->used == false)
+	else if (c == ARROW_D && grp->curr->curson == false)
 		handle_it(grp, "do", c);
-	else if (c == ARROW_D && grp->curr->used == true)
+	else if (c == ARROW_D && grp->curr->curson == true)
 		handle_it(grp, "ho", c);
 }
 

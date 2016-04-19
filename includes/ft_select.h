@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 21:09:58 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/19 23:29:43 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@
 typedef struct		s_elem
 {
 	char			*name;
-	int				used;
+	int				curson;
+	int				selected;
+	int				pos;
 	struct s_elem	*next;
 }					t_elem;
 
@@ -50,6 +52,7 @@ typedef struct		s_group
 	struct s_elem	*first;
 	struct s_elem	*curr;
 	int				line_nb;
+	int				pos_y;
 }					t_group;
 
 t_group				*init_grp(void);
@@ -57,5 +60,6 @@ int					ft_getchar(int c);
 int					insert_elem(t_group *grp, char *name);
 void				ft_tputs(char *cap_code);
 void				handling_arrow(t_group *grp, int c);
+void				handling_space();
 
 #endif

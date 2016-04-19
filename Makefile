@@ -22,7 +22,7 @@ INCLUDES		=	-I $(LIB_PATH)/includes -I ./includes
 SRCS			+=	srcs/main.c
 SRCS			+=	srcs/lst_lib.c
 SRCS			+=	srcs/handling_arrow.c
-
+SRCS			+=	srcs/handling_space.c
 OBJS			=	$(SRCS:srcs/%.c=srco/%.o)
 
 all: srco $(NAME)

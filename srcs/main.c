@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 22:41:51 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/19 23:50:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,12 @@ int		init_shell()
 	return (0);
 }
 
-void	display_select(t_elem *first)
+void	display_elements(t_group *grp, t_elem *first)
 {
 	ft_tputs("us");
 	ft_putendl(first->name);
-	first->used = true;
+	first->curson = true;
+	grp->pos_y = first->pos;
 	first = first->next;
 	ft_tputs("ue");
 	while (first != NULL)
@@ -60,6 +61,26 @@ void	display_select(t_elem *first)
 		ft_putendl(first->name);
 		first = first->next;
 	}
+}
+
+void	display_selected(t_elem *curr)
+{
+	int	i;
+
+	i = -1;
+	ft_putendl("Your selection:");
+	ft_putstr("->");
+	while (curr != NULL)
+	{
+		if (curr->selected)
+		{
+			ft_putchar(' ');
+			ft_putstr(curr->name);
+			i++;
+		}
+		curr = curr->next;
+	}
+	i < 1 ? ft_putendl("Nothing have been selected") : 0;
 }
 
 int main(int argc, char **argv)
@@ -73,11 +94,15 @@ int main(int argc, char **argv)
 	init_shell();
 	set_shell((~ICANON & ~ECHO));
 	tputs(tgetstr("cl", NULL), 1, ft_getchar);
+	//tputs(tgetstr("vi", NULL), 1, ft_getchar);
 	if (argc < 2)
 		return (0);
 	while (argv[++i])
+	{
 		insert_elem(grp, argv[i]);
-	display_select(grp->first);
+		grp->curr->pos = i;
+	}
+	display_elements(grp, grp->first);
 	tputs(tgetstr("ho", NULL), 1, ft_getchar);
 	while (read(0, order, BUF_SIZE))
 	{
@@ -86,8 +111,10 @@ int main(int argc, char **argv)
 		if(order[0] == ARROW)
 			handling_arrow(grp, order[2]);
 		else if (order[0] == SPACE)
-			ft_tputs("mr");
+			handling_space(grp);
 	}
+	tputs(tgetstr("cl", NULL), 1, ft_getchar);
+	display_selected(grp->first);
 	reset_shell();
 	return (0);
 }
