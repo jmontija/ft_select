@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 21:34:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/19 22:43:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		insert_elem(t_group *grp, char *name)
 	else
 		grp->first = new;
 	grp->curr = new;
+	grp->line_nb += 1;
 	return (0);
 }
 
@@ -47,5 +48,6 @@ t_group	*init_grp(void)
 	grp = (t_group *)malloc(sizeof(t_group));
 	grp->first = NULL;
 	grp->curr = NULL;
+	grp->line_nb = -1;
 	return (grp);
 }

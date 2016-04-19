@@ -6,7 +6,7 @@
 #    By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 17:28:13 by jmontija          #+#    #+#              #
-#    Updated: 2016/04/19 19:27:11 by jmontija         ###   ########.fr        #
+#    Updated: 2016/04/19 21:43:29 by jmontija         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ INCLUDES		=	-I $(LIB_PATH)/includes -I ./includes
 SRCS			+=	srcs/main.c
 SRCS			+=	srcs/lst_lib.c
 SRCS			+=	srcs/handling_arrow.c
-SRCS			+=	srcs/handling_tab.c
 
 OBJS			=	$(SRCS:srcs/%.c=srco/%.o)
 

@@ -49,6 +49,7 @@ typedef struct		s_group
 {
 	struct s_elem	*first;
 	struct s_elem	*curr;
+	int				line_nb;
 }					t_group;
 
 t_group				*init_grp(void);
