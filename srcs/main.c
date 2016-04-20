@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 19:21:03 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 19:51:42 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ void	display_selection(t_elem *curr)
 
 void	display_elements(t_group *grp, t_elem **curr)
 {
-	int i;
+	int	i;
+	int	l;
 
+	l = -1;
 	i = -1;
 	ft_tputs("us");
 	ft_putendl(curr[0]->name);
@@ -49,12 +51,10 @@ void	display_elements(t_group *grp, t_elem **curr)
 		while ((curr[i] = curr[i]->next) != NULL)
 		{
 			if (i > 0)
-			{
-				tputs(tgetstr("ho", NULL), 1, ft_getchar);
-				ft_putstr("\t\t\t");
-			}
+				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l++), 0, ft_getchar);
 			ft_putendl(curr[i]->name);
 		}
+		l = -1;
 	}
 	tputs(tgetstr("ho", NULL), 1, ft_getchar);
 }
@@ -73,7 +73,7 @@ void	dimension_shell(t_group *grp, char **argv)
 	while (argv[++i])
 	{
 		elem_col_nb++;
-		if (elem_col_nb >= grp->window[y])
+		if (elem_col_nb > grp->window[y])
 		{
 			col++;
 			elem_col_nb = 0;
@@ -82,7 +82,6 @@ void	dimension_shell(t_group *grp, char **argv)
 		grp->curr[col]->pos = i;
 	}
 	grp->elem_nb = i - 2;
-	printf("x= %d y = %d element = %d\n", grp->window[x], grp->window[y], grp->elem_nb);
 }
 
 void	init_selection(t_group *grp, char **argv)
@@ -107,9 +106,9 @@ int main(int argc, char **argv)
 	{
 		if (order[0] == ENTER)
 			break ;
-		/*if(order[0] == ARROW)
+		if(order[0] == ARROW)
 			handling_arrow(grp, order[2]);
-		else if (order[0] == SPACE)
+		/*else if (order[0] == SPACE)
 			handling_space(grp);*/
 	}
 	//display_selection(grp->first);

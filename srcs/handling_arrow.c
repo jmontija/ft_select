@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 19:04:39 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 19:53:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-/*void	set_underline(t_group *grp, t_elem *curr)
+void	set_underline(t_group *grp, t_elem *curr)
 {
 	ft_tputs("ce");
 	ft_tputs("cr");
@@ -81,7 +81,7 @@ void	handling_arrow(t_group *grp, int c)
 	else if (c == ARROW_D && grp->curr->curs_on == true)
 		handle_it(grp, "ho", c);
 }
-
+/*
 	ce -> suppr char from line
 	de -> remove line
 	mr -> reverse video
