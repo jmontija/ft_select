@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 23:35:40 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 19:04:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	set_underline(t_group *grp, t_elem *curr)
+/*void	set_underline(t_group *grp, t_elem *curr)
 {
 	ft_tputs("ce");
 	ft_tputs("cr");
@@ -22,8 +22,8 @@ void	set_underline(t_group *grp, t_elem *curr)
 	ft_putstr(curr->name);
 	ft_tputs("ue");
 	ft_tputs("me");
-	curr->curson = true;
-	grp->pos_y = curr->pos;
+	curr->curs_on = true;
+	grp->curs_pos = curr->pos;
 }
 
 t_elem	*reset_underline(t_group *grp, int c)
@@ -35,9 +35,9 @@ t_elem	*reset_underline(t_group *grp, int c)
 	last = curr;
 	while (curr != NULL)
 	{
-		if (curr->curson)
+		if (curr->curs_on)
 		{
-			curr->curson = false;
+			curr->curs_on = false;
 			ft_tputs("ce");
 			ft_tputs("cr");
 			if (curr->selected)
@@ -68,21 +68,20 @@ void	handle_it(t_group *grp, char *cap_code, int c)
 
 void	handling_arrow(t_group *grp, int c)
 {
-	if (c == ARROW_U && grp->first->curson == false)
+	if (c == ARROW_U && grp->first->curs_on == false)
 		handle_it(grp, "up", c);
-	else if (c == ARROW_U && grp->first->curson == true)
+	else if (c == ARROW_U && grp->first->curs_on == true)
 	{
 		reset_underline(grp, c);
-		tputs(tgoto(tgetstr("cm", NULL), 0, grp->line_nb), 0, ft_getchar);
+		tputs(tgoto(tgetstr("cm", NULL), 0, grp->elem_nb), 0, ft_getchar);
 		set_underline(grp, grp->curr);
 	}
-	else if (c == ARROW_D && grp->curr->curson == false)
+	else if (c == ARROW_D && grp->curr->curs_on == false)
 		handle_it(grp, "do", c);
-	else if (c == ARROW_D && grp->curr->curson == true)
+	else if (c == ARROW_D && grp->curr->curs_on == true)
 		handle_it(grp, "ho", c);
 }
 
-/*
 	ce -> suppr char from line
 	de -> remove line
 	mr -> reverse video

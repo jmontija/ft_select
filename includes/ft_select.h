@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 23:29:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 19:11:00 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@
 # define ARROW_R 67
 # define ARROW_D 66
 
+enum {x, y};
+
 typedef struct		s_elem
 {
 	char			*name;
-	int				curson;
+	int				curs_on;
 	int				selected;
 	int				pos;
 	struct s_elem	*next;
@@ -49,15 +51,19 @@ typedef struct		s_elem
 
 typedef struct		s_group
 {
-	struct s_elem	*first;
-	struct s_elem	*curr;
-	int				line_nb;
-	int				pos_y;
+	struct s_elem	**first;
+	struct s_elem	**curr;
+	int				elem_nb;
+	int				curs_pos;
+	int				*window;
 }					t_group;
 
 t_group				*init_grp(void);
+int					init_shell();
+int					set_shell(int lflag);
+int					reset_shell();
 int					ft_getchar(int c);
-int					insert_elem(t_group *grp, char *name);
+int					insert_elem(t_group *grp, char *name, int col);
 void				ft_tputs(char *cap_code);
 void				handling_arrow(t_group *grp, int c);
 void				handling_space();

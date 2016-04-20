@@ -6,68 +6,18 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/19 23:50:39 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 19:21:03 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int		set_shell(int lflag)
-{
-	struct termios	term;
-
-	if (tcgetattr(0, &term) == -1)
-		return (-1);
-	term.c_lflag = term.c_lflag & lflag;
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSADRAIN, &term))
-		return (-1);
-	return (0);
-}
-
-int		reset_shell()
-{
-	struct termios term;
-
-	if (tcgetattr(0, &term) == -1)
-		return (-1);
-	if (tcsetattr(0, 0, &term) == -1)
-		return (-1);
-	return (0);
-}
-
-int		init_shell()
-{
-	char	*name;
-
-	if ((name = getenv("TERM")) == NULL)
-		name = "xterm-256color";
-	if (tgetent(NULL, name) == ERR)
-		return (-1);
-	return (0);
-}
-
-void	display_elements(t_group *grp, t_elem *first)
-{
-	ft_tputs("us");
-	ft_putendl(first->name);
-	first->curson = true;
-	grp->pos_y = first->pos;
-	first = first->next;
-	ft_tputs("ue");
-	while (first != NULL)
-	{
-		ft_putendl(first->name);
-		first = first->next;
-	}
-}
-
-void	display_selected(t_elem *curr)
+void	display_selection(t_elem *curr)
 {
 	int	i;
 
 	i = -1;
+	ft_tputs("cl");
 	ft_putendl("Your selection:");
 	ft_putstr("->");
 	while (curr != NULL)
@@ -81,40 +31,87 @@ void	display_selected(t_elem *curr)
 		curr = curr->next;
 	}
 	i < 1 ? ft_putendl("Nothing have been selected") : 0;
+	reset_shell();
+}
+
+void	display_elements(t_group *grp, t_elem **curr)
+{
+	int i;
+
+	i = -1;
+	ft_tputs("us");
+	ft_putendl(curr[0]->name);
+	curr[0]->curs_on = true;
+	grp->curs_pos = curr[0]->pos;
+	ft_tputs("ue");
+	while (curr[++i])
+	{
+		while ((curr[i] = curr[i]->next) != NULL)
+		{
+			if (i > 0)
+			{
+				tputs(tgetstr("ho", NULL), 1, ft_getchar);
+				ft_putstr("\t\t\t");
+			}
+			ft_putendl(curr[i]->name);
+		}
+	}
+	tputs(tgetstr("ho", NULL), 1, ft_getchar);
+}
+
+void	dimension_shell(t_group *grp, char **argv)
+{
+	int i;
+	int col;
+	int elem_col_nb;
+
+	i = 0;
+	col = 0;
+	elem_col_nb = 0;
+	grp->window[x] = tgetnum("co");
+	grp->window[y] = tgetnum("li");
+	while (argv[++i])
+	{
+		elem_col_nb++;
+		if (elem_col_nb >= grp->window[y])
+		{
+			col++;
+			elem_col_nb = 0;
+		}
+		insert_elem(grp, argv[i], col);
+		grp->curr[col]->pos = i;
+	}
+	grp->elem_nb = i - 2;
+	printf("x= %d y = %d element = %d\n", grp->window[x], grp->window[y], grp->elem_nb);
+}
+
+void	init_selection(t_group *grp, char **argv)
+{
+	init_shell();
+	set_shell((~ICANON & ~ECHO));
+	ft_tputs("cl");
+	ft_tputs("vi");
+	dimension_shell(grp, argv);
+	display_elements(grp, grp->first);
 }
 
 int main(int argc, char **argv)
 {
 	t_group	*grp;
 	char	order[BUF_SIZE];
-	int		i;
 
-	i = 0;
 	grp = init_grp();
-	init_shell();
-	set_shell((~ICANON & ~ECHO));
-	tputs(tgetstr("cl", NULL), 1, ft_getchar);
-	//tputs(tgetstr("vi", NULL), 1, ft_getchar);
-	if (argc < 2)
-		return (0);
-	while (argv[++i])
-	{
-		insert_elem(grp, argv[i]);
-		grp->curr->pos = i;
-	}
-	display_elements(grp, grp->first);
-	tputs(tgetstr("ho", NULL), 1, ft_getchar);
+	argc < 2 ? exit(0) : 0;
+	init_selection(grp, argv);
 	while (read(0, order, BUF_SIZE))
 	{
 		if (order[0] == ENTER)
 			break ;
-		if(order[0] == ARROW)
+		/*if(order[0] == ARROW)
 			handling_arrow(grp, order[2]);
 		else if (order[0] == SPACE)
-			handling_space(grp);
+			handling_space(grp);*/
 	}
-	tputs(tgetstr("cl", NULL), 1, ft_getchar);
-	display_selected(grp->first);
-	reset_shell();
+	//display_selection(grp->first);
 	return (0);
 }
