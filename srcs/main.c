@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 19:51:42 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 20:23:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	display_elements(t_group *grp, t_elem **curr)
 	int	i;
 	int	l;
 
-	l = -1;
 	i = -1;
+	l = -1;
 	ft_tputs("us");
 	ft_putendl(curr[0]->name);
 	curr[0]->curs_on = true;
@@ -51,12 +51,12 @@ void	display_elements(t_group *grp, t_elem **curr)
 		while ((curr[i] = curr[i]->next) != NULL)
 		{
 			if (i > 0)
-				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l++), 0, ft_getchar);
+				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l++), 1, ft_getchar);
 			ft_putendl(curr[i]->name);
 		}
 		l = -1;
 	}
-	tputs(tgetstr("ho", NULL), 1, ft_getchar);
+	ft_tputs("ho");
 }
 
 void	dimension_shell(t_group *grp, char **argv)
@@ -73,7 +73,7 @@ void	dimension_shell(t_group *grp, char **argv)
 	while (argv[++i])
 	{
 		elem_col_nb++;
-		if (elem_col_nb > grp->window[y])
+		if (elem_col_nb >= grp->window[y])
 		{
 			col++;
 			elem_col_nb = 0;
@@ -89,7 +89,7 @@ void	init_selection(t_group *grp, char **argv)
 	init_shell();
 	set_shell((~ICANON & ~ECHO));
 	ft_tputs("cl");
-	ft_tputs("vi");
+	//ft_tputs("vi");
 	dimension_shell(grp, argv);
 	display_elements(grp, grp->first);
 }

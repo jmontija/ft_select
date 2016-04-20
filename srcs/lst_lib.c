@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 19:18:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/20 20:16:08 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int		insert_elem(t_group *grp, char *name, int col)
 	new->curs_on = false;
 	new->selected = false;
 	new->next = NULL;
-	//printf("col = %d\n", col);
 	if (grp->curr[col] != NULL)
 		grp->curr[col]->next = new;
 	else
