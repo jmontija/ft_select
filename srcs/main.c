@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/21 17:28:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/21 20:35:29 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,28 @@ void	display_elements(t_group *grp)
 	t_elem	**curr;
 
 	i = -1;
-	l = -1;
+	l = 0;
 	curr  = grp->tmp;
 	ft_tputs("us");
-	ft_putendl(grp->first[0]->name);
-	grp->first[0]->curs_on = true;
-	grp->curs_pos = grp->first[0]->pos;
+	ft_putendl(curr[0]->name);
+	curr[0]->curs_on = true;
+	grp->curs_pos = curr[0]->pos;
 	ft_tputs("ue");
+	curr[0] = curr[0]->next;
 	while (curr[++i])
 	{
-		while ((curr[i] = curr[i]->next) != NULL)
+		while (curr[i] != NULL)
 		{
 			if (i > 0)
-				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l++), 1, ft_getchar);
+			{
+				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l), 1, ft_getchar);
+				l++;
+			}
 			ft_putendl(curr[i]->name);
+			curr[i] = curr[i]->next;
 		}
-		l = -1;
+		l = 0;
 	}
-	grp->tmp = grp->first;
 	ft_tputs("ho");
 }
 
@@ -82,7 +86,7 @@ void	dimension_shell(t_group *grp, char **argv)
 			elem_col_nb = 0;
 		}
 		insert_elem(grp, argv[i], col);
-		grp->curr[col]->pos = i;
+		grp->curr[col]->pos = elem_col_nb - 1;
 	}
 	grp->elem_nb = i - 2;
 }
