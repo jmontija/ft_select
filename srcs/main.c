@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 20:23:15 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/21 17:28:06 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,19 @@ void	display_selection(t_elem *curr)
 	reset_shell();
 }
 
-void	display_elements(t_group *grp, t_elem **curr)
+void	display_elements(t_group *grp)
 {
 	int	i;
 	int	l;
+	t_elem	**curr;
 
 	i = -1;
 	l = -1;
+	curr  = grp->tmp;
 	ft_tputs("us");
-	ft_putendl(curr[0]->name);
-	curr[0]->curs_on = true;
-	grp->curs_pos = curr[0]->pos;
+	ft_putendl(grp->first[0]->name);
+	grp->first[0]->curs_on = true;
+	grp->curs_pos = grp->first[0]->pos;
 	ft_tputs("ue");
 	while (curr[++i])
 	{
@@ -56,6 +58,7 @@ void	display_elements(t_group *grp, t_elem **curr)
 		}
 		l = -1;
 	}
+	grp->tmp = grp->first;
 	ft_tputs("ho");
 }
 
@@ -91,12 +94,13 @@ void	init_selection(t_group *grp, char **argv)
 	ft_tputs("cl");
 	//ft_tputs("vi");
 	dimension_shell(grp, argv);
-	display_elements(grp, grp->first);
+	display_elements(grp);
 }
 
-int main(int argc, char **argv)
+int main (int argc, char **argv)
 {
 	t_group	*grp;
+	t_group *tmp;
 	char	order[BUF_SIZE];
 
 	grp = init_grp();
@@ -106,7 +110,7 @@ int main(int argc, char **argv)
 	{
 		if (order[0] == ENTER)
 			break ;
-		if(order[0] == ARROW)
+		if (order[0] == ARROW)
 			handling_arrow(grp, order[2]);
 		/*else if (order[0] == SPACE)
 			handling_space(grp);*/

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 20:35:38 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/21 19:01:13 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	set_underline(t_group *grp, t_elem *curr)
 {
-	ft_tputs("ce");
+	int i = -1;
+
 	ft_tputs("cr");
+	while (++i < ft_strlen(curr->name))
+		ft_tputs("eo");
 	if (curr->selected)
 		ft_tputs("mr");
 	ft_tputs("us");
@@ -30,36 +33,36 @@ t_elem	*reset_underline(t_group *grp, int c)
 {
 	t_elem **curr;
 	t_elem *last;
-	int		i;
+	int		col;
+	int i = -1;
 
 	curr = grp->first;
+	col = grp->curr_col;
 	last = NULL;
-	i = -1;
-	while (curr[++i] != NULL)
+
+	while (curr[col] != NULL)
 	{
-		while (curr[i] != NULL)
+		if (curr[col]->curs_on == true)
 		{
-			if (curr[i]->curs_on == true)
-			{
-				curr[i]->curs_on = false;
-				ft_tputs("ce");
-				ft_tputs("cr");
-				if (curr[i]->selected)
-					ft_tputs("mr");
-				ft_putstr(curr[i]->name);
-				ft_tputs("me");
-				if (c == ARROW_D && curr[i]->next)
-					return (curr[i]->next);
-				else if (c == ARROW_U && last)
-					return (last);
-				else
-					return (grp->first[0]);
-			}
-			last = curr[i];
-			curr[i] = curr[i]->next;
+			curr[col]->curs_on = false;
+			//ft_putstr("				");
+			ft_tputs("cr");
+			while (++i < ft_strlen(curr[col]->name))
+				ft_tputs("eo"); // in
+			if (curr[col]->selected)
+				ft_tputs("mr");
+			ft_putstr(curr[col]->name);
+			ft_tputs("me");
+			if (c == ARROW_D && curr[col]->next)
+				return (curr[col]->next);
+			else if (c == ARROW_U && last)
+				return (last);
+			else
+				return (grp->first[0]);
 		}
+		last = curr[col];
+		curr[col] = curr[col]->next;
 	}
-	printf("i = %d\n", i); // le grp->first semble vide il rentre pqs dedans
 	return (NULL);
 }
 
@@ -69,23 +72,15 @@ void	handle_it(t_group *grp, char *cap_code, int c)
 
 	curr = reset_underline(grp, c);
 	ft_tputs(cap_code);
-	//set_underline(grp, curr);
+	set_underline(grp, curr);
 }
 
 void	handling_arrow(t_group *grp, int c)
 {
-	if (c == ARROW_U && grp->first[0]->curs_on == false)
+	if (c == ARROW_U)
 		handle_it(grp, "up", c);
-	else if (c == ARROW_U && grp->first[0]->curs_on == true)
-	{
-		reset_underline(grp, c);
-		tputs(tgoto(tgetstr("cm", NULL), 0, grp->elem_nb), 0, ft_getchar);
-		set_underline(grp, grp->curr[1]);
-	}
-	else if (c == ARROW_D && grp->curr[1]->curs_on == false)
+	else if (c == ARROW_D)
 		handle_it(grp, "do", c);
-	else if (c == ARROW_D && grp->curr[1]->curs_on == true)
-		handle_it(grp, "ho", c);
 }
 
 /*

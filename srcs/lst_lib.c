@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 20:16:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/21 18:10:48 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int		insert_elem(t_group *grp, char *name, int col)
 	if (grp->curr[col] != NULL)
 		grp->curr[col]->next = new;
 	else
+	{
 		grp->first[col] = new;
+		grp->tmp[col] = new;
+	}
 	grp->curr[col] = new;
 	return (0);
 }
@@ -44,23 +47,27 @@ int		insert_elem(t_group *grp, char *name, int col)
 t_group	*init_grp(void)
 {
 	t_group	*grp;
-	int i;
+	int		i;
 
 	i = -1;
 	grp = (t_group *)malloc(sizeof(t_group));
 	grp->first = (t_elem **)malloc(sizeof(t_elem *) * 10);
+	grp->tmp = (t_elem **)malloc(sizeof(t_elem *) * 10);
 	grp->curr  = (t_elem **)malloc(sizeof(t_elem *) * 10);
 	grp->curr[10] = NULL;
 	grp->first[10] = NULL;
+	grp->tmp[10] = NULL;
 	while (++i <= 10)
+	{
 		grp->first[i] = NULL;
-	i = -1;
-	while (++i <= 10)
 		grp->curr[i] = NULL;
+		grp->tmp[i] = NULL;
+	}
 	grp->window = (int *)malloc(sizeof(int) * 2);
 	grp->window[x] = 0;
 	grp->window[y] = 0;
 	grp->elem_nb = -1;
 	grp->curs_pos = 0;
+	grp->curr_col = 0;
 	return (grp);
 }

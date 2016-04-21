@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/20 19:11:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/21 17:25:48 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ typedef struct		s_group
 {
 	struct s_elem	**first;
 	struct s_elem	**curr;
+	struct s_elem	**tmp;
 	int				elem_nb;
 	int				curs_pos;
+	int				curr_col;
 	int				*window;
 }					t_group;
 
