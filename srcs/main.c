@@ -6,31 +6,38 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 18:08:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:37:30 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	display_selection(t_elem *curr)
+void	display_selection(t_group *grp)
 {
 	int	i;
+	int	select;
+	t_elem	*curr;
 
 	i = -1;
+	select = -1;
 	ft_tputs("cl");
 	ft_putendl("Your selection:");
 	ft_putstr("->");
-	while (curr != NULL)
+	while (grp->first[++i])
 	{
-		if (curr->selected)
+		curr = grp->first[i];
+		while (curr != NULL)
 		{
-			ft_putchar(' ');
-			ft_putstr(curr->name);
-			i++;
+			if (curr->selected)
+			{
+				ft_putchar(' ');
+				ft_putstr(curr->name);
+				select++;
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
 	}
-	i < 1 ? ft_putendl("Nothing have been selected") : 0;
+	select < 1 ? ft_putendl("Nothing have been selected") : 0;
 	reset_shell();
 }
 
@@ -132,6 +139,6 @@ int main (int argc, char **argv)
 		else if (order[0] == SPACE)
 			handling_space(grp);
 	}
-	//display_selection(grp->first);
+	display_selection(grp);
 	return (0);
 }
