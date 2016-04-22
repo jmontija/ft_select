@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 23:08:02 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 18:23:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:51:01 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handling_space(t_group *grp)
 	int i = -1;
 
 	curr = grp->first[grp->curr_col];
-	pad = padding_max(curr);
+	pad = (grp->curr_col > 0) ? padding_max(grp->first[grp->curr_col - 1]) : 0;
 	ft_tputs("mr");
 	while (curr != NULL)
 	{
