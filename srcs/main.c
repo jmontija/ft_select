@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 18:47:35 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 19:19:00 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	display_elements(t_group *grp)
 		{
 			if (i > 0)
 			{
-				tputs(tgoto(tgetstr("cm", NULL), i * (pad + 5), l), 1, ft_getchar);
+				tputs(tgoto(tgetstr("cm", NULL), ((pad + 5) * i), l), 1, ft_getchar);
 				l++;
 			}
 			ft_putendl(curr->name);
