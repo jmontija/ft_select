@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 17:29:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:21:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	set_underline(t_group *grp, t_elem *curr)
 {
+	int pad;
 	int i = -1;
 
-	tputs(tgoto(tgetstr("cm", NULL), (grp->curr_col * 27), curr->pos), 1, ft_getchar);
+	pad = padding_max(grp->first[grp->curr_col]);
+	tputs(tgoto(tgetstr("cm", NULL), grp->curr_col * (pad + 5), curr->pos), 1, ft_getchar);
 	while (++i < ft_strlen(curr->name))
 		ft_tputs("in");
 	if (curr->selected)
@@ -34,18 +36,20 @@ t_elem	*reset_underline(t_group *grp, int c)
 	t_elem *curr;
 	t_elem *last;
 	int		i;
+	int		pad;
 
 	i = -1;
 	last = NULL;
 	curr = grp->first[grp->curr_col];
+	pad = padding_max(curr);
 	while (curr != NULL)
 	{
 		if (curr->curs_on == true)
 		{
 			curr->curs_on = false;
-			tputs(tgoto(tgetstr("cm", NULL), (grp->curr_col * 27), curr->pos), 1, ft_getchar);
+			tputs(tgoto(tgetstr("cm", NULL), grp->curr_col * (pad + 5), curr->pos), 1, ft_getchar);
 			while (++i < ft_strlen(curr->name))
-				ft_tputs("in"); // eo or in //
+				ft_tputs("in");
 			if (curr->selected)
 				ft_tputs("mr");
 			ft_putstr(curr->name);

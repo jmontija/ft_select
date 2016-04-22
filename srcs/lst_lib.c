@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 16:55:37 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:07:54 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ int			ft_getchar(int c)
 void	ft_tputs(char *cap_code)
 {
 	tputs(tgetstr(cap_code, NULL), 1, ft_getchar);
+}
+
+int		padding_max(t_elem *curr)
+{
+	int	max;
+	int len;
+
+	max = 0;
+	while (curr != NULL)
+	{
+		len = ft_strlen(curr->name);
+		if (max < len)
+			max = len;
+		curr = curr->next;
+	}
+	return (max);
 }
 
 int		insert_elem(t_group *grp, char *name, int col)
@@ -61,7 +77,6 @@ t_group	*init_grp(void)
 	grp->window = (int *)malloc(sizeof(int) * 2);
 	grp->window[x] = 0;
 	grp->window[y] = 0;
-	grp->elem_nb = -1;
 	grp->last_col = 0;
 	grp->last_elem = 0;
 	grp->curs_pos = 0;

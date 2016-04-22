@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 16:55:57 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:08:00 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	display_elements(t_group *grp)
 {
 	int	i;
 	int	l;
+	int pad;
 	t_elem	*curr;
 
 	i = -1;
@@ -55,11 +56,12 @@ void	display_elements(t_group *grp)
 	while (grp->first[++i])
 	{
 		curr = (i == 0) ? underline_first(grp, grp->first[i]) : grp->first[i];
+		pad = padding_max(curr);
 		while (curr != NULL)
 		{
 			if (i > 0)
 			{
-				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l), 1, ft_getchar);
+				tputs(tgoto(tgetstr("cm", NULL), (i * pad + 5), l), 1, ft_getchar);
 				l++;
 			}
 			ft_putendl(curr->name);
@@ -94,7 +96,6 @@ void	dimension_shell(t_group *grp, char **argv)
 	}
 	grp->last_col = col;
 	grp->last_elem = elem_col_nb;
-	grp->elem_nb = i - 2;
 }
 
 void	init_selection(t_group *grp, char **argv)
@@ -107,6 +108,11 @@ void	init_selection(t_group *grp, char **argv)
 	display_elements(grp);
 }
 
+void	handle_win(int sig)
+{
+
+}
+
 int main (int argc, char **argv)
 {
 	t_group	*grp;
@@ -116,6 +122,7 @@ int main (int argc, char **argv)
 	grp = init_grp();
 	argc < 2 ? exit(0) : 0;
 	init_selection(grp, argv);
+	signal(SIGWINCH, handle_win);
 	while (read(0, order, BUF_SIZE))
 	{
 		if (order[0] == ENTER)

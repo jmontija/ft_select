@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 16:55:33 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:19:14 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct		s_group
 {
 	struct s_elem	**first;
 	struct s_elem	**last;
-	int				elem_nb;
 	int				curs_pos;
 	int				curr_col;
 	int				last_col;
@@ -68,6 +67,7 @@ int					set_shell(int lflag);
 int					reset_shell();
 int					ft_getchar(int c);
 int					insert_elem(t_group *grp, char *name, int col);
+int					padding_max(t_elem *curr);
 void				ft_tputs(char *cap_code);
 void				handling_arrow(t_group *grp, int c);
 void				handling_space();
