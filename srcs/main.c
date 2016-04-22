@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 18:37:30 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 18:47:35 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	display_selection(t_group *grp)
 	t_elem	*curr;
 
 	i = -1;
-	select = -1;
+	select = 0;
 	ft_tputs("cl");
 	ft_putendl("Your selection:");
 	ft_putstr("->");
@@ -37,7 +37,7 @@ void	display_selection(t_group *grp)
 			curr = curr->next;
 		}
 	}
-	select < 1 ? ft_putendl("Nothing have been selected") : 0;
+	select == 0 ? ft_putendl("Nothing have been selected") : 0;
 	reset_shell();
 }
 
@@ -63,12 +63,12 @@ void	display_elements(t_group *grp)
 	while (grp->first[++i])
 	{
 		curr = (i == 0) ? underline_first(grp, grp->first[i]) : grp->first[i];
-		pad = padding_max(curr);
+		pad = (i > 0) ? padding_max(grp->first[i - 1]) : 0;
 		while (curr != NULL)
 		{
 			if (i > 0)
 			{
-				tputs(tgoto(tgetstr("cm", NULL), (i * pad + 5), l), 1, ft_getchar);
+				tputs(tgoto(tgetstr("cm", NULL), i * (pad + 5), l), 1, ft_getchar);
 				l++;
 			}
 			ft_putendl(curr->name);
