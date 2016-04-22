@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/21 20:36:21 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 17:29:12 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_underline(t_group *grp, t_elem *curr)
 
 	tputs(tgoto(tgetstr("cm", NULL), (grp->curr_col * 27), curr->pos), 1, ft_getchar);
 	while (++i < ft_strlen(curr->name))
-		ft_tputs("eo");
+		ft_tputs("in");
 	if (curr->selected)
 		ft_tputs("mr");
 	ft_tputs("us");
@@ -61,7 +61,7 @@ t_elem	*reset_underline(t_group *grp, int c)
 	return (NULL);
 }
 
-void	handle_it(t_group *grp, char *cap_code, int c)
+void	handle_reg(t_group *grp, char *cap_code, int c)
 {
 	t_elem	*curr;
 
@@ -70,24 +70,33 @@ void	handle_it(t_group *grp, char *cap_code, int c)
 	set_underline(grp, curr);
 }
 
+void	handle_spec(t_group *grp, int c, int col, t_elem *curr)
+{
+	reset_underline(grp, c);
+	grp->curr_col = col;
+	set_underline(grp, curr);
+}
+
 void	handling_arrow(t_group *grp, int c)
 {
-	if (c == ARROW_U)
-		handle_it(grp, "up", c);
+	if (c == ARROW_U && grp->curs_pos == 0 && grp->curr_col == 0)
+		handle_spec(grp, c, grp->last_col, grp->last[grp->last_col]);
+	else if (c == ARROW_U && grp->curs_pos == 0)
+	{
+		reset_underline(grp, c);
+		grp->curr_col -= 1;
+		set_underline(grp, grp->last[grp->curr_col]);
+	}
+	else if (c == ARROW_U)
+		handle_reg(grp, "up", c);
+	else if (c == ARROW_D && grp->last[grp->curr_col + 1] == NULL && grp->curs_pos + 1 == grp->last_elem)
+		handle_spec(grp, c, 0, grp->first[0]);
 	else if (c == ARROW_D && grp->curs_pos + 2 == grp->window[y])
 	{
 		reset_underline(grp, c);
-		grp->curs_pos = 0;
 		grp->curr_col += 1;
-		tputs(tgoto(tgetstr("cm", NULL), (grp->curr_col * 27), 0), 1, ft_getchar);
 		set_underline(grp, grp->first[grp->curr_col]);
 	}
 	else if (c == ARROW_D)
-		handle_it(grp, "do", c);
+		handle_reg(grp, "do", c);
 }
-
-/*
-	ce -> suppr char from line
-	de -> remove line
-	mr -> reverse video
-*/

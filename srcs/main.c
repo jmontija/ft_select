@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/21 20:35:29 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 16:55:57 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,36 @@ void	display_selection(t_elem *curr)
 	reset_shell();
 }
 
+t_elem	*underline_first(t_group *grp, t_elem *curr)
+{
+	curr->curs_on = true;
+	ft_tputs("us");
+	ft_putendl(curr->name);
+	ft_tputs("ue");
+	grp->curs_pos = curr->pos;
+	return (curr->next);
+}
+
 void	display_elements(t_group *grp)
 {
 	int	i;
 	int	l;
-	t_elem	**curr;
+	t_elem	*curr;
 
 	i = -1;
 	l = 0;
-	curr  = grp->tmp;
-	ft_tputs("us");
-	ft_putendl(curr[0]->name);
-	curr[0]->curs_on = true;
-	grp->curs_pos = curr[0]->pos;
-	ft_tputs("ue");
-	curr[0] = curr[0]->next;
-	while (curr[++i])
+	while (grp->first[++i])
 	{
-		while (curr[i] != NULL)
+		curr = (i == 0) ? underline_first(grp, grp->first[i]) : grp->first[i];
+		while (curr != NULL)
 		{
 			if (i > 0)
 			{
 				tputs(tgoto(tgetstr("cm", NULL), (i * 27), l), 1, ft_getchar);
 				l++;
 			}
-			ft_putendl(curr[i]->name);
-			curr[i] = curr[i]->next;
+			ft_putendl(curr->name);
+			curr = curr->next;
 		}
 		l = 0;
 	}
@@ -83,11 +87,13 @@ void	dimension_shell(t_group *grp, char **argv)
 		if (elem_col_nb >= grp->window[y])
 		{
 			col++;
-			elem_col_nb = 0;
+			elem_col_nb = 1;
 		}
 		insert_elem(grp, argv[i], col);
-		grp->curr[col]->pos = elem_col_nb - 1;
+		grp->last[col]->pos = elem_col_nb - 1;
 	}
+	grp->last_col = col;
+	grp->last_elem = elem_col_nb;
 	grp->elem_nb = i - 2;
 }
 
@@ -116,8 +122,8 @@ int main (int argc, char **argv)
 			break ;
 		if (order[0] == ARROW)
 			handling_arrow(grp, order[2]);
-		/*else if (order[0] == SPACE)
-			handling_space(grp);*/
+		else if (order[0] == SPACE)
+			handling_space(grp);
 	}
 	//display_selection(grp->first);
 	return (0);

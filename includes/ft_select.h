@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/21 17:25:48 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 16:55:33 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,19 @@ typedef struct		s_elem
 	int				curs_on;
 	int				selected;
 	int				pos;
+	int				last;
 	struct s_elem	*next;
 }					t_elem;
 
 typedef struct		s_group
 {
 	struct s_elem	**first;
-	struct s_elem	**curr;
-	struct s_elem	**tmp;
+	struct s_elem	**last;
 	int				elem_nb;
 	int				curs_pos;
 	int				curr_col;
+	int				last_col;
+	int				last_elem;
 	int				*window;
 }					t_group;
 

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/21 20:09:43 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 16:55:37 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int		insert_elem(t_group *grp, char *name, int col)
 	new->curs_on = false;
 	new->selected = false;
 	new->next = NULL;
-	if (grp->curr[col] != NULL)
-		grp->curr[col]->next = new;
+	new->last = false;
+	if (grp->last[col] != NULL)
+		grp->last[col]->next = new;
 	else
-	{
 		grp->first[col] = new;
-		grp->tmp[col] = new;
-	}
-	grp->curr[col] = new;
+	grp->last[col] = new;
 	return (0);
 }
 
@@ -52,21 +50,20 @@ t_group	*init_grp(void)
 	i = -1;
 	grp = (t_group *)malloc(sizeof(t_group));
 	grp->first = (t_elem **)malloc(sizeof(t_elem *) * 10);
-	grp->tmp = (t_elem **)malloc(sizeof(t_elem *) * 10);
-	grp->curr  = (t_elem **)malloc(sizeof(t_elem *) * 10);
-	grp->curr[10] = NULL;
+	grp->last  = (t_elem **)malloc(sizeof(t_elem *) * 10);
+	grp->last[10] = NULL;
 	grp->first[10] = NULL;
-	grp->tmp[10] = NULL;
 	while (++i <= 10)
 	{
 		grp->first[i] = NULL;
-		grp->curr[i] = NULL;
-		grp->tmp[i] = NULL;
+		grp->last[i] = NULL;
 	}
 	grp->window = (int *)malloc(sizeof(int) * 2);
 	grp->window[x] = 0;
 	grp->window[y] = 0;
 	grp->elem_nb = -1;
+	grp->last_col = 0;
+	grp->last_elem = 0;
 	grp->curs_pos = 0;
 	grp->curr_col = 0;
 	return (grp);

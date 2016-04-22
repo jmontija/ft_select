@@ -6,15 +6,15 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 23:08:02 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/21 19:28:53 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/22 16:53:10 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-/*
+
 void	handling_space(t_group *grp)
 {
-	t_elem *curr;
+	/*t_elem *curr;
 
 	curr = grp->first;
 	ft_tputs("mr");
@@ -35,5 +35,5 @@ void	handling_space(t_group *grp)
 		}
 		curr = curr->next;
 	}
-	ft_tputs("me");
-}*/
+	ft_tputs("me");*/
+}
