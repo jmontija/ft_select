@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 21:00:17 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 22:01:27 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	display_elements(t_group *grp, int first)
 	i = -1;
 	l = 0;
 	pad = 0;
+
 	while (grp->first[++i])
 	{
-
 		curr = (i == 0 && first) ? underline_first(grp, grp->first[i]) : grp->first[i];
 		while (curr != NULL)
 		{
@@ -86,6 +86,30 @@ void	display_elements(t_group *grp, int first)
 		pad += padding_max(grp->first[i]) + 5;
 	}
 	ft_tputs("ho");
+}
+
+void	reset_all(t_group *grp)
+{
+	int	i;
+	t_elem	*curr;
+	t_elem	*tmp;
+
+	i = -1;
+	while (grp->first[++i])
+	{
+		curr = grp->first[i];
+		while (curr != NULL)
+		{
+			ft_strdel(&curr->name);
+			curr->curs_on = false;
+			curr->selected = false;
+			curr->next = NULL;
+			curr->padding = 0;
+			tmp = curr;
+			ft_memdel((void *)&tmp);
+			curr = curr->next;
+		}
+	}
 }
 
 void	dimension_shell(t_group *grp, char **argv)
@@ -133,10 +157,7 @@ void	handler(int sig)
 	grp = init_grp();
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &window);
 	x_max = (grp->first[grp->last_col]->padding) + padding_max(grp->first[grp->last_col]);
-	ft_tputs("cl");
-	if ((window.ws_col < x_max) ||
-		(grp->last_col > 0 && window.ws_row < grp->window[y]) ||
-		window.ws_row < grp->last[0]->pos + 2)
+	if (window.ws_col < x_max || window.ws_row < grp->window[y])
 	{
 		ft_tputs("cl");
 		ft_putendl("window needs to be bigger to display the selection");
