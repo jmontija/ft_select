@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 18:49:10 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 17:40:47 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	set_underline(t_group *grp, t_elem *curr)
 {
-	int pad;
 	int i = -1;
 
-	pad = (grp->curr_col > 0) ? padding_max(grp->first[grp->curr_col - 1]) : 0;
-	tputs(tgoto(tgetstr("cm", NULL), grp->curr_col * (pad + 5), curr->pos), 1, ft_getchar);
+	tputs(tgoto(tgetstr("cm", NULL), curr->padding, curr->pos), 1, ft_getchar);
 	while (++i < ft_strlen(curr->name))
 		ft_tputs("in");
 	if (curr->selected)
@@ -36,18 +34,16 @@ t_elem	*reset_underline(t_group *grp, int c)
 	t_elem *curr;
 	t_elem *last;
 	int		i;
-	int		pad;
 
 	i = -1;
 	last = NULL;
 	curr = grp->first[grp->curr_col];
-	pad = (grp->curr_col > 0) ? padding_max(grp->first[grp->curr_col - 1]) : 0;
 	while (curr != NULL)
 	{
 		if (curr->curs_on == true)
 		{
 			curr->curs_on = false;
-			tputs(tgoto(tgetstr("cm", NULL), grp->curr_col * (pad + 5), curr->pos), 1, ft_getchar);
+			tputs(tgoto(tgetstr("cm", NULL), curr->padding, curr->pos), 1, ft_getchar);
 			while (++i < ft_strlen(curr->name))
 				ft_tputs("in");
 			if (curr->selected)
@@ -86,21 +82,13 @@ void	handling_arrow(t_group *grp, int c)
 	if (c == ARROW_U && grp->curs_pos == 0 && grp->curr_col == 0)
 		handle_spec(grp, c, grp->last_col, grp->last[grp->last_col]);
 	else if (c == ARROW_U && grp->curs_pos == 0)
-	{
-		reset_underline(grp, c);
-		grp->curr_col -= 1;
-		set_underline(grp, grp->last[grp->curr_col]);
-	}
+		handle_spec(grp, c, grp->curr_col - 1, grp->last[grp->curr_col - 1]);
 	else if (c == ARROW_U)
 		handle_reg(grp, "up", c);
 	else if (c == ARROW_D && grp->last[grp->curr_col + 1] == NULL && grp->curs_pos + 1 == grp->last_elem)
 		handle_spec(grp, c, 0, grp->first[0]);
 	else if (c == ARROW_D && grp->curs_pos + 2 == grp->window[y])
-	{
-		reset_underline(grp, c);
-		grp->curr_col += 1;
-		set_underline(grp, grp->first[grp->curr_col]);
-	}
+		handle_spec(grp, c, grp->curr_col + 1, grp->first[grp->curr_col + 1]);
 	else if (c == ARROW_D)
 		handle_reg(grp, "do", c);
 }

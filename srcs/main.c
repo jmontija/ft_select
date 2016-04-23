@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 19:19:00 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 17:33:50 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,23 @@ void	display_elements(t_group *grp)
 
 	i = -1;
 	l = 0;
+	pad = 0;
 	while (grp->first[++i])
 	{
 		curr = (i == 0) ? underline_first(grp, grp->first[i]) : grp->first[i];
-		pad = (i > 0) ? padding_max(grp->first[i - 1]) : 0;
 		while (curr != NULL)
 		{
 			if (i > 0)
 			{
-				tputs(tgoto(tgetstr("cm", NULL), ((pad + 5) * i), l), 1, ft_getchar);
+				tputs(tgoto(tgetstr("cm", NULL), pad, l), 1, ft_getchar);
 				l++;
 			}
 			ft_putendl(curr->name);
+			curr->padding = pad;
 			curr = curr->next;
 		}
 		l = 0;
+		pad += padding_max(grp->first[i]) + 5;
 	}
 	ft_tputs("ho");
 }

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 23:08:02 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 18:51:01 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 17:41:20 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 void	handling_space(t_group *grp)
 {
 	t_elem *curr;
-	int pad;
 	int i = -1;
 
 	curr = grp->first[grp->curr_col];
-	pad = (grp->curr_col > 0) ? padding_max(grp->first[grp->curr_col - 1]) : 0;
 	ft_tputs("mr");
 	while (curr != NULL)
 	{
 		if (curr->selected == false && curr->pos == grp->curs_pos)
 		{
-			tputs(tgoto(tgetstr("cm", NULL), grp->curr_col * (pad + 5), curr->pos), 1, ft_getchar);
+			tputs(tgoto(tgetstr("cm", NULL), curr->padding, curr->pos), 1, ft_getchar);
 			while (++i < ft_strlen(curr->name))
 				ft_tputs("in");
 			ft_putstr(curr->name);
@@ -33,7 +31,7 @@ void	handling_space(t_group *grp)
 		}
 		else if (curr->selected == true && curr->pos == grp->curs_pos)
 		{
-			tputs(tgoto(tgetstr("cm", NULL), grp->curr_col * (pad + 5), curr->pos), 1, ft_getchar);
+			tputs(tgoto(tgetstr("cm", NULL), curr->padding, curr->pos), 1, ft_getchar);
 			while (++i < ft_strlen(curr->name))
 				ft_tputs("in");
 			ft_tputs("me");
