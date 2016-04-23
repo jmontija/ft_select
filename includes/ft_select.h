@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 20:37:15 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 22:10:32 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_elem
 	char			*name;
 	int				curs_on;
 	int				selected;
+	int				num;
 	int				pos;
 	int				padding;
 	struct s_elem	*next;

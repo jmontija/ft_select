@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 22:01:27 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 22:26:02 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ void	display_elements(t_group *grp, int first)
 	int	i;
 	int	l;
 	int pad;
+	int next;
 	t_elem	*curr;
 
 	i = -1;
 	l = 0;
 	pad = 0;
-
+	next = false
 	while (grp->first[++i])
 	{
 		curr = (i == 0 && first) ? underline_first(grp, grp->first[i]) : grp->first[i];
@@ -103,13 +104,42 @@ void	reset_all(t_group *grp)
 			ft_strdel(&curr->name);
 			curr->curs_on = false;
 			curr->selected = false;
-			curr->next = NULL;
 			curr->padding = 0;
+			curr->next = NULL;
 			tmp = curr;
 			ft_memdel((void *)&tmp);
 			curr = curr->next;
 		}
 	}
+}
+
+void	make_copy(t_group *grp)
+{
+	int	i;
+	t_elem	*curr;
+	t_elem	**copy
+	t_elem	curr_cpy;
+
+	if (grp->first == NULL)
+		return ;
+	i = -1;
+	copy = (t_elem **)malloc(sizeof(t_elem *) * 10);
+	copy[10] = NULL;
+	while (++i <= 10)
+		copy[i] = NULL;
+	while (grp->first[++i])
+	{
+		curr = grp->first[i];
+		curr_cpy = copy[i];
+		while (curr != NULL)
+		{
+			curr_cpy = (t_elem *)malloc(sizeof(t_elem));
+			curr_cpy->curs_on = curr->curs_on;
+			curr_cpy->selected = curr->selected;
+			curr = curr->next;
+		}
+	}
+	reset_all(grp);
 }
 
 void	dimension_shell(t_group *grp, char **argv)
@@ -123,6 +153,7 @@ void	dimension_shell(t_group *grp, char **argv)
 	elem_col_nb = 0;
 	grp->window[x] = tgetnum("co");
 	grp->window[y] = tgetnum("li");
+	make_copy(grp);
 	while (argv[++i])
 	{
 		elem_col_nb++;
@@ -133,6 +164,7 @@ void	dimension_shell(t_group *grp, char **argv)
 		}
 		insert_elem(grp, argv[i], col);
 		grp->last[col]->pos = elem_col_nb - 1;
+		grp->last[col]->num = i;
 	}
 	grp->last_col = col;
 	grp->last_elem = elem_col_nb;
