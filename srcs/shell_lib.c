@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 15:38:42 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/22 17:51:12 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 18:39:17 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		reset_shell()
 {
 	struct termios term;
 
+	ft_tputs("ve");
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
 	if (tcsetattr(0, 0, &term) == -1)

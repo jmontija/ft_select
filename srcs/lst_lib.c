@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 17:32:08 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 20:01:40 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int		insert_elem(t_group *grp, char *name, int col)
 	return (0);
 }
 
-t_group	*init_grp(void)
+t_group	*set_grp(void)
 {
-	t_group	*grp;
+	t_group	*grp = NULL;
 	int		i;
 
 	i = -1;
@@ -83,5 +83,14 @@ t_group	*init_grp(void)
 	grp->curs_pos = 0;
 	grp->curr_col = 0;
 	grp->curr_pad = 0;
+	return (grp);
+}
+
+t_group	*init_grp()
+{
+	static t_group *grp = NULL;
+
+	if (grp == NULL)
+		grp = set_grp();
 	return (grp);
 }

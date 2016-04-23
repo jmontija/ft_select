@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 17:40:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 20:32:48 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_elem	*reset_underline(t_group *grp, int c)
 				ft_tputs("in");
 			if (curr->selected)
 				ft_tputs("mr");
+			if (curr->pos == grp->curs_pos)
 			ft_putstr(curr->name);
 			ft_tputs("me");
 			if (c == ARROW_D && curr->next)

@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 17:34:16 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 20:37:15 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <term.h>
 # include <signal.h>
 # include <curses.h>
+# include <sys/ioctl.h>
 
 # define BUF_SIZE 3
 # define ENTER 10
@@ -37,6 +38,7 @@
 # define ARROW_U 65
 # define ARROW_R 67
 # define ARROW_D 66
+# define GRP(x) (init_grp()->x)
 
 enum {x, y};
 

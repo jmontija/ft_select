@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 17:33:50 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 21:00:17 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_elem	*underline_first(t_group *grp, t_elem *curr)
 	return (curr->next);
 }
 
-void	display_elements(t_group *grp)
+void	display_elements(t_group *grp, int first)
 {
 	int	i;
 	int	l;
@@ -63,7 +63,8 @@ void	display_elements(t_group *grp)
 	pad = 0;
 	while (grp->first[++i])
 	{
-		curr = (i == 0) ? underline_first(grp, grp->first[i]) : grp->first[i];
+
+		curr = (i == 0 && first) ? underline_first(grp, grp->first[i]) : grp->first[i];
 		while (curr != NULL)
 		{
 			if (i > 0)
@@ -71,7 +72,13 @@ void	display_elements(t_group *grp)
 				tputs(tgoto(tgetstr("cm", NULL), pad, l), 1, ft_getchar);
 				l++;
 			}
+			if (curr->selected)
+				ft_tputs("mr");
+			if (curr->curs_on)
+				ft_tputs("us");
 			ft_putendl(curr->name);
+			ft_tputs("ue");
+			ft_tputs("me");
 			curr->padding = pad;
 			curr = curr->next;
 		}
@@ -112,14 +119,33 @@ void	init_selection(t_group *grp, char **argv)
 	init_shell();
 	set_shell((~ICANON & ~ECHO));
 	ft_tputs("cl");
-	//ft_tputs("vi");
+	ft_tputs("vi");
 	dimension_shell(grp, argv);
-	display_elements(grp);
+	display_elements(grp, 1);
 }
 
-void	handle_win(int sig)
+void	handler(int sig)
 {
+	struct winsize	window;
+	int				x_max;
+	t_group			*grp;
 
+	grp = init_grp();
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &window);
+	x_max = (grp->first[grp->last_col]->padding) + padding_max(grp->first[grp->last_col]);
+	ft_tputs("cl");
+	if ((window.ws_col < x_max) ||
+		(grp->last_col > 0 && window.ws_row < grp->window[y]) ||
+		window.ws_row < grp->last[0]->pos + 2)
+	{
+		ft_tputs("cl");
+		ft_putendl("window needs to be bigger to display the selection");
+	}
+	else
+	{
+		ft_tputs("cl");
+		display_elements(grp, 0);
+	}
 }
 
 int main (int argc, char **argv)
@@ -131,7 +157,7 @@ int main (int argc, char **argv)
 	grp = init_grp();
 	argc < 2 ? exit(0) : 0;
 	init_selection(grp, argv);
-	signal(SIGWINCH, handle_win);
+	signal(SIGWINCH, handler);
 	while (read(0, order, BUF_SIZE))
 	{
 		if (order[0] == ENTER)
