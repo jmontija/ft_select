@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 22:26:02 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/23 22:31:11 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ void	display_elements(t_group *grp, int first)
 	int	i;
 	int	l;
 	int pad;
-	int next;
 	t_elem	*curr;
 
 	i = -1;
 	l = 0;
 	pad = 0;
-	next = false
 	while (grp->first[++i])
 	{
 		curr = (i == 0 && first) ? underline_first(grp, grp->first[i]) : grp->first[i];
@@ -117,8 +115,8 @@ void	make_copy(t_group *grp)
 {
 	int	i;
 	t_elem	*curr;
-	t_elem	**copy
-	t_elem	curr_cpy;
+	t_elem	**copy;
+	t_elem	*curr_cpy;
 
 	if (grp->first == NULL)
 		return ;
@@ -153,7 +151,7 @@ void	dimension_shell(t_group *grp, char **argv)
 	elem_col_nb = 0;
 	grp->window[x] = tgetnum("co");
 	grp->window[y] = tgetnum("li");
-	make_copy(grp);
+	//make_copy(grp);
 	while (argv[++i])
 	{
 		elem_col_nb++;
