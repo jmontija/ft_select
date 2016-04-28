@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   shell_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 15:38:42 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/27 01:01:19 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 19:30:28 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-struct termios	cpy_term;
-
 int		set_shell(int lflag)
 {
 	struct termios	term;
+	t_group			*grp;
 
+	grp = init_grp();
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
-	cpy_term = term;
+	grp->cpy_term = term;
 	term.c_lflag = term.c_lflag & lflag;
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
@@ -32,8 +32,11 @@ int		set_shell(int lflag)
 
 int		reset_shell(void)
 {
+	t_group	*grp;
+
+	grp = init_grp();
 	ft_tputs("ve");
-	if (tcsetattr(0, 0, &cpy_term) == -1)
+	if (tcsetattr(0, 0, &(grp->cpy_term)) == -1)
 		return (-1);
 	return (0);
 }
@@ -42,11 +45,10 @@ int		init_shell(void)
 {
 	char	*name;
 
-	if ((name = getenv("TERM")) == NULL)
+	if ((name = getenv("TERM")) == NULL ||
+		(ft_strcmp(name, "xterm-256color") != 0))
 		name = "xterm-256color";
 	if (tgetent(NULL, name) == ERR)
 		return (-1);
 	return (0);
 }
-
-/* attenntion segFlt si fenetre trop petite au debut */

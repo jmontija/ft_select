@@ -6,7 +6,7 @@
 #    By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 17:28:13 by jmontija          #+#    #+#              #
-#    Updated: 2016/04/26 19:42:54 by jmontija         ###   ########.fr        #
+#    Updated: 2016/04/28 17:40:03 by jmontija         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,13 @@ SRCS			+=	srcs/main.c
 SRCS			+=	srcs/lst_lib.c
 SRCS			+=	srcs/shell_lib.c
 SRCS			+=	srcs/select_lib.c
+SRCS			+=	srcs/arrow_lr.c
 SRCS			+=	srcs/signaux.c
 SRCS			+=	srcs/handling_key.c
 SRCS			+=	srcs/handling_display.c
 SRCS			+=	srcs/display_elements.c
 SRCS			+=	srcs/search.c
+SRCS			+=	srcs/search_lib.c
 
 OBJS			=	$(SRCS:srcs/%.c=srco/%.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_select.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:58:47 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 00:46:16 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 19:27:55 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define ARROW_R 4414235
 # define ARROW_D 4348699
 # define BACKSPACE 127
+# define DEL 2117294875
 # define CTRL_R 18
 # define KEY(a, b, c, d) ((d << 24) + (c << 16) + (b << 8) + a)
 
@@ -62,6 +63,7 @@ typedef struct		s_group
 	struct s_elem	*first;
 	struct s_elem	*last;
 	struct s_elem	*curr;
+	struct termios	cpy_term;
 	char			*search;
 	int				is_locked;
 	int				is_search;
@@ -71,6 +73,8 @@ typedef struct		s_group
 
 t_group				*init_grp(void);
 t_elem				*reset_underline(t_group *grp, int c);
+t_elem				*find_search(t_group *grp, char *search);
+void				set_underline(t_group *grp, t_elem *curr);
 int					init_shell(void);
 int					set_shell(int lflag);
 int					reset_shell(void);
@@ -91,5 +95,7 @@ void				sig_handler(void);
 void				init_search(t_group *grp);
 void				display_search(struct winsize window);
 void				handling_search(t_group *grp, int key);
+char				*ft_charjoin(char *s1, char c);
+char				*ft_free_char(char *s1);
 
 #endif

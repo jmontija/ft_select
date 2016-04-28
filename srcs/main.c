@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 01:36:00 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 17:30:38 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,25 @@ void	init_selection(t_group *grp, char **argv)
 	handler_display(grp, 1);
 }
 
+void	unselect_all(t_group *grp)
+{
+	t_elem	*curr;
+	int		i;
+
+	i = 0;
+	curr = grp->first;
+	while (curr != NULL)
+	{
+		if (curr->selected == true)
+		{
+			i++;
+			curr->selected = false;
+		}
+		curr = curr->next;
+	}
+	i > 0 ? handler_display(grp, 0) : 0;
+}
+
 int		key_selection(t_group *grp, int key)
 {
 	if (grp->is_locked == false && grp->is_search == false)
@@ -61,13 +80,12 @@ int		key_selection(t_group *grp, int key)
 			handling_arrow(grp, key);
 		else if (key == SPACE)
 			handling_space(grp);
-		else if (key == BACKSPACE)
+		else if (key == BACKSPACE || key == DEL)
 			handling_backspace(grp);
 		else if (key == CTRL_R)
 			init_search(grp);
-		/*else if (key == 'd')
-		{
-		}*/
+		else if (key == 'd')
+			unselect_all(grp);
 	}
 	else if (grp->is_locked == false && grp->is_search == true)
 		handling_search(grp, key);

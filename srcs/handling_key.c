@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_key.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 16:00:29 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 01:24:31 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 16:34:59 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	handling_backspace(t_group *grp)
 		prev = curr;
 		curr = curr->next;
 	}
-	ft_tputs("bl");
 	handler_display(grp, 0);
 }
 
@@ -98,4 +97,3 @@ void	handling_arrow(t_group *grp, int c)
 	else if (c == ARROW_R)
 		handle_lr(1, grp);
 }
-

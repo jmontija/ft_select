@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select_lib.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 20:50:08 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/27 23:37:13 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 17:24:39 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		check_window(t_group *grp, t_elem *curr)
 		{
 			pad += padding_max(grp->first) + 5;
 			if (window.ws_col < pad + padding_max(grp->first))
-				return(-1);
+				return (-1);
 			l = 2;
 		}
 		curr = curr->next;

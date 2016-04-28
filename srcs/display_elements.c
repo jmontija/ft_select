@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_elements.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 19:18:32 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 01:24:29 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 18:07:47 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	clear_elements(void)
 {
-	int	i;
+	int				i;
 	struct winsize	window;
 
 	i = -1;
@@ -22,6 +22,26 @@ void	clear_elements(void)
 	ioctl(0, TIOCGWINSZ, &window);
 	while (++i <= window.ws_row)
 		ft_tputs("dl");
+}
+
+void	display_col(t_elem *curr, int pad, int l)
+{
+	tputs(tgoto(tgetstr("cm", NULL), pad, l), 1, ft_getchar);
+	if (curr->selected)
+		ft_tputs("mr");
+	if (curr->curs_on)
+	{
+		ft_tputs("us");
+		ft_putstr_fd("\033[1;32m", 2);
+	}
+	else
+		ft_putstr_fd("\033[1;37m", 2);
+	ft_putendl_fd(curr->name, 2);
+	ft_putstr_fd("\033[0;m", 2);
+	ft_tputs("ue");
+	ft_tputs("me");
+	curr->padding = pad;
+	curr->line = l;
 }
 
 int		display_elements(t_group *grp, int first)
@@ -44,20 +64,7 @@ int		display_elements(t_group *grp, int first)
 			pad += padding_max(grp->first) + 5;
 			l = 2;
 		}
-		tputs(tgoto(tgetstr("cm", NULL), pad, l), 1, ft_getchar);
-		if (curr->selected)
-			ft_tputs("mr");
-		if (curr->curs_on)
-		{
-			ft_tputs("us");
-			ft_putstr_fd("\033[1;32m", 2);
-		}
-		ft_putendl_fd(curr->name, 2);
-		ft_putstr_fd("\033[0;m", 2);
-		ft_tputs("ue");
-		ft_tputs("me");
-		curr->padding = pad;
-		curr->line = l;
+		display_col(curr, pad, l);
 		curr = curr->next;
 		l++;
 	}

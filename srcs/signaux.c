@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 20:39:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/27 01:01:22 by julio            ###   ########.fr       */
+/*   Updated: 2016/04/28 19:41:22 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	handler_win(int sig)
 {
-	t_group			*grp;
-	int first;
+	t_group	*grp;
+	int		first;
 
 	sig = 0;
 	grp = init_grp();
@@ -39,7 +39,12 @@ void	handler_ctrl(int sig)
 {
 	char	order[2];
 
-	order[0] = sig == SIGTSTP ? 26 : 3;
+	if (sig == SIGINT)
+		order[0] = 3;
+	else if (sig == SIGTSTP)
+		order[0] = 26;
+	else if (sig == SIGQUIT)
+		order[0] = 28;
 	order[1] = 0;
 	reset_shell();
 	signal(sig, SIG_DFL);
@@ -51,5 +56,6 @@ void	sig_handler(void)
 	signal(SIGWINCH, handler_win);
 	signal(SIGINT, handler_ctrl);
 	signal(SIGTSTP, handler_ctrl);
+	signal(SIGQUIT, handler_ctrl);
 	signal(SIGCONT, handler_cont);
 }
