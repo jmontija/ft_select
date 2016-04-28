@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shell_lib.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 15:38:42 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 18:39:17 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/27 01:01:19 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+struct termios	cpy_term;
 
 int		set_shell(int lflag)
 {
@@ -18,27 +20,25 @@ int		set_shell(int lflag)
 
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
+	cpy_term = term;
 	term.c_lflag = term.c_lflag & lflag;
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSADRAIN, &term))
 		return (-1);
+	ft_tputs("vi");
 	return (0);
 }
 
-int		reset_shell()
+int		reset_shell(void)
 {
-	struct termios term;
-
 	ft_tputs("ve");
-	if (tcgetattr(0, &term) == -1)
-		return (-1);
-	if (tcsetattr(0, 0, &term) == -1)
+	if (tcsetattr(0, 0, &cpy_term) == -1)
 		return (-1);
 	return (0);
 }
 
-int		init_shell()
+int		init_shell(void)
 {
 	char	*name;
 
@@ -48,3 +48,5 @@ int		init_shell()
 		return (-1);
 	return (0);
 }
+
+/* attenntion segFlt si fenetre trop petite au debut */

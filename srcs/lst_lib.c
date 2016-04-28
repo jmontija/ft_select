@@ -3,29 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   lst_lib.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/23 22:20:04 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/28 00:46:22 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int			ft_getchar(int c)
-{
-	return (write(1, &c, 1));
-}
-
-void	ft_tputs(char *cap_code)
-{
-	tputs(tgetstr(cap_code, NULL), 1, ft_getchar);
-}
-
 int		padding_max(t_elem *curr)
 {
 	size_t	max;
-	size_t len;
+	size_t	len;
 
 	max = 0;
 	len = 0;
@@ -39,7 +29,7 @@ int		padding_max(t_elem *curr)
 	return ((int)max);
 }
 
-int		insert_elem(t_group *grp, char *name, int col)
+int		insert_elem(t_group *grp, char *name)
 {
 	t_elem	*new;
 
@@ -49,45 +39,38 @@ int		insert_elem(t_group *grp, char *name, int col)
 	new->name = ft_strdup(name);
 	new->curs_on = false;
 	new->selected = false;
-	new->next = NULL;
-	new->num = 0;
 	new->padding = 0;
-	if (grp->last[col] != NULL)
-		grp->last[col]->next = new;
+	new->line = 0;
+	new->next = NULL;
+	if (grp->last != NULL)
+		grp->last->next = new;
 	else
-		grp->first[col] = new;
-	grp->last[col] = new;
+		grp->first = new;
+	grp->last = new;
 	return (0);
 }
 
 t_group	*set_grp(void)
 {
-	t_group	*grp = NULL;
+	t_group	*grp;
 	int		i;
 
 	i = -1;
 	grp = (t_group *)malloc(sizeof(t_group));
-	grp->first = (t_elem **)malloc(sizeof(t_elem *) * 10);
-	grp->last  = (t_elem **)malloc(sizeof(t_elem *) * 10);
-	grp->last[10] = NULL;
-	grp->first[10] = NULL;
-	while (++i <= 10)
-	{
-		grp->first[i] = NULL;
-		grp->last[i] = NULL;
-	}
+	grp->first = NULL;
+	grp->last = NULL;
+	grp->curr = NULL;
+	grp->search = ft_strdup("");
 	grp->window = (int *)malloc(sizeof(int) * 2);
 	grp->window[x] = 0;
 	grp->window[y] = 0;
-	grp->last_col = 0;
-	grp->last_elem = 0;
-	grp->curs_pos = 0;
-	grp->curr_col = 0;
-	grp->curr_pad = 0;
+	grp->curs_pos = -1;
+	grp->is_locked = false;
+	grp->is_search = false;
 	return (grp);
 }
 
-t_group	*init_grp()
+t_group	*init_grp(void)
 {
 	static t_group *grp = NULL;
 

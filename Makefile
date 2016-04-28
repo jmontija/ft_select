@@ -6,7 +6,7 @@
 #    By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/10 17:28:13 by jmontija          #+#    #+#              #
-#    Updated: 2016/04/20 15:37:40 by jmontija         ###   ########.fr        #
+#    Updated: 2016/04/26 19:42:54 by jmontija         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,12 @@ INCLUDES		=	-I $(LIB_PATH)/includes -I ./includes
 SRCS			+=	srcs/main.c
 SRCS			+=	srcs/lst_lib.c
 SRCS			+=	srcs/shell_lib.c
-SRCS			+=	srcs/handling_arrow.c
-SRCS			+=	srcs/handling_space.c
+SRCS			+=	srcs/select_lib.c
+SRCS			+=	srcs/signaux.c
+SRCS			+=	srcs/handling_key.c
+SRCS			+=	srcs/handling_display.c
+SRCS			+=	srcs/display_elements.c
+SRCS			+=	srcs/search.c
 
 OBJS			=	$(SRCS:srcs/%.c=srco/%.o)
 
