@@ -6,7 +6,7 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 19:18:32 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 18:07:47 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/28 20:21:09 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ void	display_col(t_elem *curr, int pad, int l)
 {
 	tputs(tgoto(tgetstr("cm", NULL), pad, l), 1, ft_getchar);
 	if (curr->selected)
+	{
+		ft_putstr_fd("\033[1;36m", 2);
 		ft_tputs("mr");
+	}
 	if (curr->curs_on)
 	{
 		ft_tputs("us");
 		ft_putstr_fd("\033[1;32m", 2);
 	}
-	else
+	else if (curr->selected == false)
 		ft_putstr_fd("\033[1;37m", 2);
 	ft_putendl_fd(curr->name, 2);
 	ft_putstr_fd("\033[0;m", 2);

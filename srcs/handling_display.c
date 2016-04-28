@@ -6,13 +6,13 @@
 /*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 18:50:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 19:32:06 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/28 20:19:45 by jmontija         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	clear_pos(t_elem *curr, int curs_on)
+void	clear_pos(t_elem *curr, int curs_on, char *color)
 {
 	size_t i;
 
@@ -21,15 +21,20 @@ void	clear_pos(t_elem *curr, int curs_on)
 	while (++i < ft_strlen(curr->name))
 		ft_tputs("in");
 	if (curr->selected)
+	{
 		ft_tputs("mr");
+		ft_putstr_fd("\033[1;36m", 2);
+	}
+	else
+		ft_putstr_fd(color, 2);
 	curr->curs_on = curs_on;
 }
 
 void	set_underline(t_group *grp, t_elem *curr)
 {
-	clear_pos(curr, true);
-	ft_tputs("us");
+	clear_pos(curr, true, "\033[1;32m");
 	ft_putstr_fd("\033[1;32m", 2);
+	ft_tputs("us");
 	ft_putstr_fd(curr->name, 2);
 	ft_putstr_fd("\033[0;m", 2);
 	ft_tputs("ue");
@@ -49,8 +54,7 @@ t_elem	*reset_underline(t_group *grp, int c)
 	{
 		if (curr->curs_on == true)
 		{
-			clear_pos(curr, false);
-			ft_putstr_fd("\033[1;37m", 2);
+			clear_pos(curr, false, "\033[1;37m");
 			ft_putstr_fd(curr->name, 2);
 			ft_putstr_fd("\033[0;m", 2);
 			ft_tputs("me");
