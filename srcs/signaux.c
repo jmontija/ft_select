@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 20:39:28 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 19:41:22 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/29 00:09:41 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handler_win(int sig)
 	t_group	*grp;
 	int		first;
 
-	sig = 0;
+	sig =! 0 ? 0 : 0;
 	grp = init_grp();
 	first = (grp->curs_pos < 0) ? 1 : 0;
 	grp = init_grp();
@@ -28,7 +28,7 @@ void	handler_cont(int sig)
 {
 	t_group	*grp;
 
-	sig = 0;
+	sig =! 0 ? 0 : 0;
 	grp = init_grp();
 	init_shell();
 	set_shell((~ICANON & ~ECHO));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 15:56:15 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 19:57:18 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/29 00:06:59 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	display_selection(t_group *grp)
 {
-	int		i;
 	int		select;
 	t_elem	*curr;
 
-	i = -1;
 	select = 0;
 	curr = grp->first;
 	clear_elements();
@@ -103,7 +101,6 @@ int		main(int argc, char **argv)
 	t_group	*grp;
 	int		key;
 	char	order[BUF_SIZE + 1];
-	char	tmp[512];
 
 	argc < 2 ? exit(0) : 0;
 	sig_handler();

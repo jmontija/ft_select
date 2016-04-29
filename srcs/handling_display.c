@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handling_display.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 18:50:39 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 20:19:45 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/29 01:06:13 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	clear_pos(t_elem *curr, int curs_on, char *color)
 	if (curr->selected)
 	{
 		ft_tputs("mr");
-		ft_putstr_fd("\033[1;36m", 2);
+		ft_putstr_fd("\033[1;32m", 2);
+		if (!curr->curs_on)
+			ft_putstr_fd("\033[1;37m", 2);
+		
 	}
 	else
 		ft_putstr_fd(color, 2);
@@ -33,7 +36,7 @@ void	clear_pos(t_elem *curr, int curs_on, char *color)
 void	set_underline(t_group *grp, t_elem *curr)
 {
 	clear_pos(curr, true, "\033[1;32m");
-	ft_putstr_fd("\033[1;32m", 2);
+	//ft_putstr_fd("\033[1;32m", 2);
 	ft_tputs("us");
 	ft_putstr_fd(curr->name, 2);
 	ft_putstr_fd("\033[0;m", 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_elements.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/24 19:18:32 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 20:21:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/29 01:35:16 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@ void	clear_elements(void)
 void	display_col(t_elem *curr, int pad, int l)
 {
 	tputs(tgoto(tgetstr("cm", NULL), pad, l), 1, ft_getchar);
-	if (curr->selected)
-	{
-		ft_putstr_fd("\033[1;36m", 2);
-		ft_tputs("mr");
-	}
-	if (curr->curs_on)
+	if (curr->selected == false && curr->curs_on == false)
+		ft_putstr_fd("\033[1;37m", 2);
+	else if (curr->curs_on == true)
 	{
 		ft_tputs("us");
 		ft_putstr_fd("\033[1;32m", 2);
+		if (curr->selected == true)
+			ft_putstr_fd("\033[1;37m", 2);
 	}
-	else if (curr->selected == false)
-		ft_putstr_fd("\033[1;37m", 2);
+	else
+		ft_putstr_fd("\033[1;32m", 2);
+	if (curr->selected)
+		ft_tputs("mr");
 	ft_putendl_fd(curr->name, 2);
 	ft_putstr_fd("\033[0;m", 2);
 	ft_tputs("ue");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_lib.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmontija <jmontija@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julio <julio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 17:17:17 by jmontija          #+#    #+#             */
-/*   Updated: 2016/04/28 19:29:09 by jmontija         ###   ########.fr       */
+/*   Updated: 2016/04/29 00:07:20 by julio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int		insert_elem(t_group *grp, char *name)
 t_group	*set_grp(void)
 {
 	t_group	*grp;
-	int		i;
 
-	i = -1;
 	grp = (t_group *)malloc(sizeof(t_group));
 	grp->first = NULL;
 	grp->last = NULL;
